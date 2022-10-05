@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />    
+        <title>Dancing Cat</title>
+        <link rel="stylesheet" href="cat_css.css" />
+    </head>
+    <body>
+        <div id="header">
+            <h1>DANCING CAT</h1>
+            <p>TW: Flashing Lights</p>
+        </div>
+        <div id="main">
+            <img src="dancing_cat_images/LongCat_Left.png" alt="Long Cat Image" id="catImage" />
+            <div id="container">
+                <div class="left">
+                    <label for="duration"><p>How long will LongCat dance?</p></label>
+                    <input type="number" id="timeLoop">
+                    <br>
+                    <button id="danceBtn">DANCE</button>
+                    <br>
+                    <button id="stopBtn" onclick="stopTimer();">STOP</button>
+                </div>
+                <div class="right">
+                    <div class = box>
+                        <p id="message" class="msg">Dancing For</p>
+                        <p id="time" class="msg">
+                            <span id="countdown">...</span>
+                            <br>
+                            SECONDS
+                        </p>
+                        <br>
+                        <p id="error">Please let LongCat dance :( Input a number!</p>    
+                    </div>
+                </div>    
+            </div>    
+        </div>
+        <script src = "cat_javascript.js"></script>
+    </body>
+</html>
