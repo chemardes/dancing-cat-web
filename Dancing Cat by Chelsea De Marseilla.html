@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />    
+        <title>Dancing Cat</title>
+        <style type="text/css">
+            @import url('https://fonts.googleapis.com/css2?family=Nerko+One&display=swap');
+
+            *{
+                margin: 0px;
+                padding: 0px;
+                box-sizing: border-box;
+            }
+
+            body{
+                background-color: #FF9AA2;
+                font-family: 'Nerko One', cursive;
+            }
+
+            /*LAYOUT*/
+            #header{
+                height: 15vh;
+            }
+            
+            #main{
+                height:85vh;
+            }
+
+            .left{
+                width: 50%;
+                display:block;
+                float:left;
+                margin-top: 30px;
+                text-align: center;
+                font-family: 'Nerko One', cursive;
+                font-size:1.5rem;
+            }
+
+            .right{
+                width:50%;
+                float:left;
+                margin-top: 30px;
+                text-align: center;
+            }
+
+            /*ELEMENTS*/
+            h1{
+                text-align:center;
+                position: relative;
+                top: 25%;
+                font-size: 3rem;
+            }
+
+            #header p{
+                position: absolute;
+                top: 1rem;
+                left: 2rem;
+                font-size: 1.2rem;
+            }
+
+            .right p{
+                font-size: 2rem;
+            }
+
+            #catImage{
+                display:block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 10rem;
+            }
+
+            #timeLoop{
+                margin-left:auto;
+                margin-right: auto;
+                background-color: black;
+                border: 4px solid white;
+                display: block;
+                padding:10px;
+                color: white;
+                text-align: center;
+                font-family: 'Nerko One', cursive;
+                font-size:1.5rem;
+            }
+
+            #danceBtn{
+                background-color: #dfc4a8;
+                display:block;
+                margin-left: auto;
+                margin-right: auto;
+                border:none;
+                width: 200px;
+                padding: 10px;
+                border-radius: 10px;
+                font-family: 'Nerko One', cursive;
+                font-size: 1.5rem;
+            }
+
+            #danceBtn:hover, #stopBtn:hover{
+                background-color: #B1907F;
+                color:white;
+            }
+
+            #stopBtn{
+                background-color: #dfc4a8;
+                display:block;
+                margin-left: auto;
+                margin-right: auto;
+                border:none;
+                width: 200px;
+                padding: 10px;
+                border-radius: 10px;
+                font-family: 'Nerko One', cursive;
+                font-size: 1.5rem;
+            }
+
+            .box{
+                padding: 20px;
+                width: 75%;
+                margin-right: auto;
+                margin-left: auto;
+                border: 4px solid black;
+                border-radius: 20px;
+                background-color: #ddc1bd;
+            }
+
+            #error{
+                display:none;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div id="header">
+            <h1>DANCING CAT</h1>
+            <p>TW: Flashing Lights</p>
+        </div>
+        <div id="main">
+            <img src="CSC1030_Portfolio2_Task2_Pictures/LongCat_Left.png" alt="Long Cat Image" id="catImage" />
+            <div id="container">
+                <div class="left">
+                    <label for="duration"><p>How long will LongCat dance?</p></label>
+                    <input type="number" id="timeLoop">
+                    <br>
+                    <button id="danceBtn">DANCE</button>
+                    <br>
+                    <button id="stopBtn" onclick="stopTimer();">STOP</button>
+                </div>
+                <div class="right">
+                    <div class = box>
+                        <p id="message" class="msg">Dancing For</p>
+                        <p id="time" class="msg">
+                            <span id="countdown">...</span>
+                            <br>
+                            SECONDS
+                        </p>
+                        <br>
+                        <p id="error">Please let LongCat dance :( Input a number!</p>    
+                    </div>
+                </div>    
+            </div>    
+        </div>
+
+        <!--internal javascript-->
+        <script type="text/javascript">
+            var duration;
+            var start;
+            var colorChange;
+            var dance;
+            var i = 0;
+            var images = ["CSC1030_Portfolio2_Task2_Pictures/LongCat_Left.png","CSC1030_Portfolio2_Task2_Pictures/LongCat_Right.png"];
+            var display =  document.getElementById('catImage');
+
+            //example 2 - Event Listener
+            document.querySelector('#danceBtn').addEventListener('click', function(){
+                duration = document.getElementById('timeLoop').value;
+
+                //validation check (checks whether there is input/when input is zero)
+                if(!duration || duration == 0){
+                    errorMessage();
+                }else{
+                    document.querySelector('#error').style.display = "none";
+                    const errorMsg = document.querySelectorAll('.msg');
+                        for(let i=0; i<errorMsg.length; i++){
+                            errorMsg[i].style.color = "black";
+                        }
+
+                    document.getElementById('countdown').innerHTML = duration;
+                    start =  setInterval(countdown,1000);
+                    
+                    colorChange = setInterval(changeColor,500);
+
+                    imageChange(); // method called to avoid delay 
+                    dance = setInterval(imageChange,500);
+                }
+
+            });
+
+            function countdown(){
+                let count = document.getElementById('countdown');
+                
+                if(!duration) {
+                    stopTimer();
+
+                }else if(duration == 0){
+                    stopTimer();
+                    count.innerHTML = "...";
+                }else{
+                    duration--;
+                    count.innerHTML = duration;
+                    if(duration == 0){
+                        stopTimer();
+                        count.innerHTML = "...";
+                    }
+                }
+            }
+
+            //example 3 - Node List + Looping
+            //if data doesn't fit validation check, then call function
+            function errorMessage() {
+
+                const errorMsg = document.querySelectorAll('.msg');
+                for(let i=0; i<errorMsg.length; i++){
+                    errorMsg[i].style.color = "red";
+                }
+                document.getElementById('countdown').innerHTML = "...";
+
+                //example 1 - access by id 
+                document.querySelector('#error').style.display = "block";
+            }
+
+            function getRandomColor() {
+                var letters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+                var color = '#';
+                for (var i = 0; i < 6; i++ ) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }   
+
+            function changeColor(){
+                document.querySelector('body').style.backgroundColor = getRandomColor();
+            }
+
+            function imageChange(){
+                display.src = images[i];
+                i = (i+1)%images.length; //returns either 0,1
+            }
+
+            function stopTimer(){
+                clearInterval(start);
+                clearInterval(dance);
+                clearInterval(colorChange);
+            }
+
+            
+        </script>
+    </body>
+</html>
