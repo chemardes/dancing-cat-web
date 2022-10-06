@@ -5,6 +5,7 @@ var dance;
 var i = 0;
 var images = ["dancing_cat_images/LongCat_Left.png", "dancing_cat_images/LongCat_Right.png"];
 var display = document.getElementById('catImage');
+var sound = document.querySelector('#catMeow');
 
 //example 2 - Event Listener
 document.querySelector('#danceBtn').addEventListener('click', function () {
@@ -27,6 +28,8 @@ document.querySelector('#danceBtn').addEventListener('click', function () {
 
         imageChange(); // method called to avoid delay 
         dance = setInterval(imageChange, 500);
+
+        playAudio();
     }
 
 });
@@ -73,6 +76,14 @@ function getRandomColor() {
     return color;
 }
 
+function playAudio(){
+    sound.play();
+}
+
+function pauseAudio(){
+    sound.pause();
+}
+
 function changeColor() {
     document.querySelector('body').style.backgroundColor = getRandomColor();
 }
@@ -86,4 +97,5 @@ function stopTimer() {
     clearInterval(start);
     clearInterval(dance);
     clearInterval(colorChange);
+    pauseAudio();
 }

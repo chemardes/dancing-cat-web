@@ -45,6 +45,10 @@ h1 {
     font-size: 3rem;
 }
 
+#catMeow{
+    display: none;
+}
+
 #header p {
     position: absolute;
     top: 1rem;
