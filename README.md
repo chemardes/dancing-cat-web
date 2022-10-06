@@ -16,5 +16,5 @@ Watch as the background colour changes, and look out for cat meowing noises as y
 
 ## COOL FEATURES
 1. Constantly changing background colour
-2. Meowing Noises
+2. Cat Meowing sounds for user immersion
 3. Timer Display
